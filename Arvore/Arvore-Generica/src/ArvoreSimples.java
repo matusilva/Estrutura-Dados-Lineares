@@ -12,46 +12,50 @@ public class ArvoreSimples implements ArvoreGenerica {
 		tamanho = 1;
 	}
 
-	// Tamanho da arvore
+	// Retorna numero de nos na arvore
 	@Override
 	public int size() {
 		return 0;
 	}
 
+	// Retorna se a arvore esta vazia, false pois sempre terá a raiz
 	@Override
 	public boolean isEmpty() {
 		return false;
 	}
 
+	// Retorna a altura da arvore
 	@Override
 	public int height() {
 		int altura = 0;
 		return altura;
 	}
 
+	// Retorna um iterator com os elementos na arvore
 	@Override
 	public Iterator elements() {
 		return null;
 	}
 
+	// Retorna um iterator com as posições nos na arvore
 	@Override
 	public Iterator nos() {
 		return null;
 	}
 
-	// Raiz da arvore
+	// Retorna a raiz da arvore
 	@Override
 	public No root() {
 		return raiz;
 	}
 
-	// Pai
+	//Retorna o Pai de um No
 	@Override
 	public No parent(No v) {
 		return (v.parent());
 	}
 
-	// Filho
+	//Retorna os Filhos de um No Pai
 	@Override
 	public Iterator children(No v) {
 		return (v.children());
@@ -81,6 +85,7 @@ public class ArvoreSimples implements ArvoreGenerica {
 		return 0;
 	}
 
+	// Retorna a profundidade de um No
 	private int profundidade(No v) {
 		if (v == raiz) {
 			return 0;
@@ -96,6 +101,7 @@ public class ArvoreSimples implements ArvoreGenerica {
 		return null;
 	}
 
+	// Adicionar um filho a um No
 	@Override
 	public void addChildren(No v, Object o) {
 		No novo = new No(v, o);
@@ -103,6 +109,7 @@ public class ArvoreSimples implements ArvoreGenerica {
 		tamanho++;
 	}
 
+	// Remover No, somente os externos e que tenham pai
 	@Override
 	public Object remove(No v) throws InvalidNoException {
 		No pai = v.parent();
