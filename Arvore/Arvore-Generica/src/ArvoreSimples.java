@@ -15,20 +15,52 @@ public class ArvoreSimples implements ArvoreGenerica {
 	// Retorna numero de nos na arvore
 	@Override
 	public int size() {
-		return 0;
+		return this.tamanho;
 	}
 
-	// Retorna se a arvore esta vazia, false pois sempre ter· a raiz
+	// Retorna se a arvore esta vazia, false pois sempre ter√° a raiz
 	@Override
 	public boolean isEmpty() {
 		return false;
 	}
+	
+	// Retorna a profundidade de um No
+	@Override
+	public int depth(No v) {
+		int profundidade = profundidade(v);
+		return profundidade;
+	}
 
+	private int profundidade(No v) {
+		if (v == raiz) {
+			return 0;
+		}
+		else {
+			return 1 + profundidade(v.parent());
+		}
+	}
+	
 	// Retorna a altura da arvore
 	@Override
 	public int height() {
-		int altura = 0;
+		int altura = altura(this.raiz);
 		return altura;
+	}
+	
+	private int altura(No v) {
+		if (isExternal(v)) {
+			return 0;
+		}
+		else {
+			int h = 0;
+			Iterator<No> it = v.children();
+			while (it.hasNext()) {
+				No no = (No) it.next();
+				h = Math.max(h, altura(v));
+				
+			}
+			return 1 + h;
+		}
 	}
 
 	// Retorna um iterator com os elementos na arvore
@@ -37,7 +69,7 @@ public class ArvoreSimples implements ArvoreGenerica {
 		return null;
 	}
 
-	// Retorna um iterator com as posiÁıes nos na arvore
+	// Retorna um iterator com as posi√ß√µes nos na arvore
 	@Override
 	public Iterator nos() {
 		return null;
@@ -61,13 +93,13 @@ public class ArvoreSimples implements ArvoreGenerica {
 		return (v.children());
 	}
 
-	// No interno
+	// No interno = no com filhos
 	@Override
 	public boolean isInternal(No v) {
 		return (v.childrenNumber() > 0);
 	}
 
-	// No externo
+	// No externo = no sem filhos
 	@Override
 	public boolean isExternal(No v) {
 		return (v.childrenNumber() == 0);
@@ -80,25 +112,14 @@ public class ArvoreSimples implements ArvoreGenerica {
 	}
 
 	@Override
-	public int depth(No v) {
-		int profundidade = profundidade(v);
-		return 0;
-	}
-
-	// Retorna a profundidade de um No
-	private int profundidade(No v) {
-		if (v == raiz) {
-			return 0;
-		}
-		else {
-			return 1 + profundidade(v.parent());
-		}
-	}
-
-	@Override
 	public Object replace(No v, Object o) {
-		// TODO Auto-generated method stub
-		return null;
+		No no;
+		Object ob;
+		
+		no = v;
+		ob = no.element();
+		no.setElement(o);
+		return ob;
 	}
 
 	// Adicionar um filho a um No
@@ -108,7 +129,7 @@ public class ArvoreSimples implements ArvoreGenerica {
 		v.addChild(novo);
 		tamanho++;
 	}
-
+	
 	// Remover No, somente os externos e que tenham pai
 	@Override
 	public Object remove(No v) throws InvalidNoException {
@@ -117,8 +138,9 @@ public class ArvoreSimples implements ArvoreGenerica {
 			pai.removeChild(v);
 		}
 		else {
-			throw new InvalidNoException("N„o È possÌvel remover Raiz");
+			throw new InvalidNoException("N√£o √© poss√≠vel remover Raiz");
 		}
+		
 		Object o = v.element();
 		tamanho--;
 		return o;
@@ -126,11 +148,17 @@ public class ArvoreSimples implements ArvoreGenerica {
 	
 	// troca dois elementos de posicao
 	public void swapElements(No v, No w) {
-		/*fazer com que o objeto que estava na posicao v
-		 * fique na posicao w 
-		 * e fazer com que o objeto que 
-		 * estava na posicao w 
-		 * fique na v
-		*/
+		Object ov = v.element();
+		Object ow = w.element();
+		v.setElement(ov);
+		w.setElement(ow);
+	}
+	
+	public void preOrder(No n, Vector v) {
+		Iterator<No> w = n.children();
+		
+		while (w.hasNext()) {
+			preOrder(w.next(), v);
+		}
 	}
 }
