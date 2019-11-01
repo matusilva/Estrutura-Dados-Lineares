@@ -17,18 +17,15 @@ public class Heap implements IHeap {
 
 	@Override
 	public void removeMin() {
-		troca(1, size);
-		int aux = heap[size];
-		heap[size] =  (Integer) null;
+		this.troca(1, this.size);
 		this.size--;
-		
-		downHeap();
+		//downHeap();
 	}
 	
 	private void troca(int valor1, int valor2) {
-		int raiz = heap[valor1];
-		heap[valor1] = heap[valor2];
-		heap[valor2] = raiz;
+		int raiz = this.heap[valor1];
+		this.heap[valor1] = heap[valor2];
+		this.heap[valor2] = raiz;
 	}
 
 	@Override
@@ -39,14 +36,13 @@ public class Heap implements IHeap {
 	@Override
 	public void upHeap() {
 		int aux = size;
-		while (aux != 1 && this.heap[aux / 2] <= this.heap[aux]) {
+		while (!(aux == 1 || this.heap[aux / 2] <= this.heap[aux])) {
 			int paicopia = this.heap[aux / 2];
 			this.heap[aux / 2] = this.heap[aux];
 			this.heap[aux] = paicopia;
 			
 			aux = aux / 2;
 		}
-		
 	}
 
 	@Override
@@ -68,13 +64,17 @@ public class Heap implements IHeap {
 				aux = size + 1;
 			}
 			
-			filhoEsquerdo = 2 * aux; 
+			filhoEsquerdo = 2 * aux;
 			filhoDireito =  2 * aux + 1;
 		}
 	}
 	
 	public void print() {
+		for (int i = 0; i < heap.length; i++) {
+			System.out.println(heap[i] + " ");
+		}
 		
+		System.out.println("\n");
 	}
 
 	@Override
