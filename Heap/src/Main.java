@@ -14,7 +14,7 @@ public class Main {
 			
 			if (opcao == 1) {
 				System.out.println("digite o numero que deseja inserir");
-				int num = sc.nextInt();
+				Integer num = sc.nextInt();
 				heap.insert(num);
 			}
 			

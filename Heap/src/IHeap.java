@@ -1,10 +1,10 @@
 
 public interface IHeap {
-	public void insert(int num);
+	public void insert(Integer num);
 	public void removeMin();
-	public int min();
+	public Integer min();
 	public void upHeap();
 	public void downHeap();
-	public int size();
+	public Integer size();
 	public boolean isEmpty();
 }

@@ -1,16 +1,16 @@
 
 public class Heap implements IHeap {
 
-	private int size;
-	private int heap[];
+	private Integer size;
+	private Integer heap[];
 	
 	public Heap() {
 		this.size = 0;
-		this.heap = new int[10];
+		this.heap = new Integer[10];
 	}
 	
 	@Override
-	public void insert(int num) {
+	public void insert(Integer num) {
 		this.heap[++this.size] = num;
 		upHeap();
 	}
@@ -18,18 +18,19 @@ public class Heap implements IHeap {
 	@Override
 	public void removeMin() {
 		this.troca(1, this.size);
+		this.heap[this.size] = null;
 		this.size--;
-		//downHeap();
+		downHeap();
 	}
 	
-	private void troca(int valor1, int valor2) {
-		int raiz = this.heap[valor1];
+	private void troca(Integer valor1, Integer valor2) {
+		Integer raiz = this.heap[valor1];
 		this.heap[valor1] = heap[valor2];
 		this.heap[valor2] = raiz;
 	}
 
 	@Override
-	public int min() {
+	public Integer min() {
 		return this.heap[1];
 	}
 
@@ -37,7 +38,7 @@ public class Heap implements IHeap {
 	public void upHeap() {
 		int aux = size;
 		while (!(aux == 1 || this.heap[aux / 2] <= this.heap[aux])) {
-			int paicopia = this.heap[aux / 2];
+			Integer paicopia = this.heap[aux / 2];
 			this.heap[aux / 2] = this.heap[aux];
 			this.heap[aux] = paicopia;
 			
@@ -47,25 +48,58 @@ public class Heap implements IHeap {
 
 	@Override
 	public void downHeap() {
-		int aux = 1;
-		int filhoEsquerdo = 2 * aux; 
-		int filhoDireito =  2 * aux + 1;
+		Integer aux = 1;
+		//int filhoEsquerdo = 2 * aux; 
+		//int filhoDireito =  2 * aux + 1;
 		
-		while (aux <= size) {
-			if (this.heap[filhoEsquerdo] < this.heap[aux]) {
-				troca(filhoEsquerdo, aux);
-				aux = filhoEsquerdo;
-			}
-			else if (this.heap[filhoDireito] < this.heap[aux]) {
-				troca(filhoDireito, aux);
-				aux = filhoDireito;
-			}
-			else {
-				aux = size + 1;
+		// comparar o pai com os dois filhos, esquerdo e direito ou encontra folha null
+		// while(true)
+		Integer filhoEsquerdo;
+		Integer filhoDireito;
+		Integer k;
+		
+		while (true) {
+			
+			filhoEsquerdo = 2 * aux; 
+			filhoDireito =  2 * aux + 1;
+			boolean analisaFilhos = true;
+			
+			if (aux > this.size ) {
+				break;
 			}
 			
-			filhoEsquerdo = 2 * aux;
-			filhoDireito =  2 * aux + 1;
+			else {
+				if (filhoEsquerdo <= this.size) {
+					if (this.heap[aux] > this.heap[filhoEsquerdo] ) {
+						analisaFilhos = false;
+					}
+				}
+				if (filhoDireito <= this.size) {
+					if (this.heap[aux] > this.heap[filhoDireito] ) {
+						analisaFilhos = false;
+					}
+				}
+				if(analisaFilhos) break;
+			}
+
+			if (!(this.heap[filhoEsquerdo] == null) ) {
+				if (!(this.heap[filhoDireito] == null)) {
+					if (this.heap[filhoDireito] < this.heap[filhoEsquerdo]) {
+						k = filhoDireito;
+					}
+					else {
+						k = filhoEsquerdo;
+					}
+				}
+				else {
+					k = filhoEsquerdo;
+				}
+				
+				if (this.heap[k] < this.heap[aux]) {
+					troca(k, aux);
+					aux = k;
+				}
+			}
 		}
 	}
 	
@@ -78,7 +112,7 @@ public class Heap implements IHeap {
 	}
 
 	@Override
-	public int size() {
+	public Integer size() {
 		return size;
 	}
 
