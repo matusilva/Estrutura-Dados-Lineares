@@ -36,7 +36,8 @@ public class Heap implements IHeap {
 
 	@Override
 	public void upHeap() {
-		int aux = size;
+		int aux = size; //pego o ultimo valor
+		// upHeap termina quando aux encontra a raiz ou quando o pai for menor ou igual ao filho
 		while (!(aux == 1 || this.heap[aux / 2] <= this.heap[aux])) {
 			Integer paicopia = this.heap[aux / 2];
 			this.heap[aux / 2] = this.heap[aux];

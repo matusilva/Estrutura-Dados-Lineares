@@ -38,13 +38,13 @@ public class Main {
 	}
 	
 	public static void menu() {
-		System.out.println("-- HEAP --");
-		System.out.println("1 - insert");
-		System.out.println("2 - removeMin");
-		System.out.println("3 - min");
-		System.out.println("4 - size");
-		System.out.println("5 - print");
-		System.out.println("6 - sair");
+		System.out.println("-- -- HEAP -- --");
+		System.out.println("| 1 | - Insert");
+		System.out.println("| 2 | - RemoveMin");
+		System.out.println("| 3 | - Min");
+		System.out.println("| 4 | - Size");
+		System.out.println("| 5 | - Print");
+		System.out.println("| 6 | - Sair");
 	}
 
 }
