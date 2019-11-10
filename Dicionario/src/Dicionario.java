@@ -5,7 +5,7 @@ public class Dicionario implements IDicionario {
 	private int size;
 	
 	public Dicionario() {
-		heap = new No[20];
+		heap = new No[1];
 		size = 0;
 	}
 	
@@ -19,18 +19,25 @@ public class Dicionario implements IDicionario {
 	public Object findElement(int k) {
 		int i = h(k);
 		// j = p no slide
-		for (int j = 0; j < heap.length; j++) {
+		for (int j = 0; j < heap.length; j++) 
+		{
 			// node = c no slide
 			No node =  heap[i];
-			if (!(node == null)) {
-				if (!node.isAvailable() && k == node.getK()) {
+			
+			if (!(node == null)) 
+			{
+				if (!node.isAvailable() && k == node.getK()) 
+				{
 					return node.getO();
 				}
-				else {
+				
+				else 
+				{
 					i = (i + 1) % this.heap.length;
 				}
 			}
-			else {
+			else 
+			{
 				return null;
 			}
 		}
@@ -39,8 +46,9 @@ public class Dicionario implements IDicionario {
 
 	@Override
 	public void insertItem(int k, Object o) {
-		if (this.size == this.heap.length) {
-			System.out.println("Cheio");
+		if (this.size == this.heap.length) 
+		{
+			System.out.println("A Tabela Hash encontra-se cheia");
 		}
 		
 		No node = new No();
@@ -50,11 +58,14 @@ public class Dicionario implements IDicionario {
 		
 		int i = h(k);
 		// j = p no slide
-		for (int j = 0; j < heap.length; j++) {
-			if (this.heap[i] == null || this.heap[i].isAvailable()) {
+		for (int j = 0; j < heap.length; j++) 
+		{
+			if (this.heap[i] == null || this.heap[i].isAvailable()) 
+			{
 				this.heap[i] = node;
 				this.size++;
 			}
+			
 			i = (i + 1) % heap.length;
 		}
 		
@@ -62,20 +73,39 @@ public class Dicionario implements IDicionario {
 
 	@Override
 	public Object removeElement(int k) {
-		// TODO Auto-generated method stub
+		int i = h(k);
+		for (int j = 0; j < heap.length; j++) 
+		{
+			No node = this.heap[i];
+			if (!(node == null)) 
+			{
+				if (!node.isAvailable() && k == node.getK()) 
+				{
+					node.setAvailable(true);
+					this.size--;
+					return node.getO();
+				}
+				else 
+				{
+					i = i + 1 % this.heap.length;
+				}
+			}
+			else 
+			{
+				return null;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.size == 0;
 	}
 
 }
