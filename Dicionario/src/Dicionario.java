@@ -107,12 +107,11 @@ public class Dicionario implements IDicionario {
 			}
 			else 
 			{
-				System.out.println(" " + this.heap[i].getO()+ " ");
+				System.out.println("| " + this.heap[i].getK()+" | " + this.heap[i].getO());
 			}
 		}
 	}
 	
-
 	@Override
 	public int size() {
 		return this.size;
