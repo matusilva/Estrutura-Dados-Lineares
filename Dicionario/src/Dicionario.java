@@ -5,7 +5,7 @@ public class Dicionario implements IDicionario {
 	private int size;
 	
 	public Dicionario() {
-		heap = new No[10];
+		heap = new No[13];
 		size = 0;
 	}
 	
@@ -51,20 +51,27 @@ public class Dicionario implements IDicionario {
 			System.out.println("A Tabela Hash encontra-se cheia");
 		}
 		
-		No node = new No();
-		node.setO(o); 
-		node.setK(k); 
-		node.setAvailable(false);
+		int j = 0;
 		
-		int i = h(k);
-		// j = p no slide
-		if (this.heap[i] == null || this.heap[i].isAvailable()) 
+		while (true) 
 		{
-			this.heap[i] = node;
-			this.size++;
+			No node = new No();
+			node.setO(o); 
+			node.setK(k); 
+			node.setAvailable(false);
+			
+			int i = j + h(k);
+			// proximo
+			j++;
+			// j = p no slide
+			if (this.heap[i] == null || this.heap[i].isAvailable()) 
+			{
+				this.heap[i] = node;
+				this.size++;
+				break;
+			}
+			// i = (i + 1) % heap.length;
 		}
-		// proximo
-		i = (i + 1) % heap.length;
 	}
 
 	@Override
