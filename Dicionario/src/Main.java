@@ -4,7 +4,7 @@ public class Main {
 
 	public static void menu() {
 		System.out.println("==== MENU ====");
-		System.out.println("| 1 | - Inserir\n| 2 | - Remover\n| 3 | - Buscar\n| 4 | - Size\n| 5 | - Sair");
+		System.out.println("| 1 | - Inserir\n| 2 | - Remover\n| 3 | - Buscar\n| 4 | - Size\n| 5 | - Print\n| 6 |- Sair");
 	}
 	public static void main(String[] args) {
 		Dicionario hash = new Dicionario();
@@ -38,7 +38,11 @@ public class Main {
 				System.out.println(hash.size());
 			}
 			
-		} while (opcao != 5);
+			if (opcao == 5) {
+				hash.print();
+			}
+			
+		} while (opcao != 6);
 	}
 
 }

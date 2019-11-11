@@ -5,7 +5,7 @@ public class Dicionario implements IDicionario {
 	private int size;
 	
 	public Dicionario() {
-		heap = new No[1];
+		heap = new No[10];
 		size = 0;
 	}
 	
@@ -58,17 +58,13 @@ public class Dicionario implements IDicionario {
 		
 		int i = h(k);
 		// j = p no slide
-		for (int j = 0; j < heap.length; j++) 
+		if (this.heap[i] == null || this.heap[i].isAvailable()) 
 		{
-			if (this.heap[i] == null || this.heap[i].isAvailable()) 
-			{
-				this.heap[i] = node;
-				this.size++;
-			}
-			
-			i = (i + 1) % heap.length;
+			this.heap[i] = node;
+			this.size++;
 		}
-		
+		// proximo
+		i = (i + 1) % heap.length;
 	}
 
 	@Override
@@ -97,6 +93,25 @@ public class Dicionario implements IDicionario {
 		}
 		return null;
 	}
+	
+	public void print() {
+		for (int i = 0; i < heap.length; i++) 
+		{
+			if (this.heap[i] == null) 
+			{
+				System.out.println("null");
+			}
+			// caso for removido
+			else if (this.heap[i].isAvailable()) {
+				System.out.println("null");
+			}
+			else 
+			{
+				System.out.println(" " + this.heap[i].getO()+ " ");
+			}
+		}
+	}
+	
 
 	@Override
 	public int size() {
