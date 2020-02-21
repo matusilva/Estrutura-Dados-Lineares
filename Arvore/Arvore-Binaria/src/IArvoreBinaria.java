@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public interface IArvoreBinaria
@@ -8,7 +9,7 @@ public interface IArvoreBinaria
     public int height();
 
     public Iterator elements();
-    public Iterator nos();
+    public ArrayList nos();
 
     // Metodos de Acesso
     public No root();

@@ -5,7 +5,7 @@ public class ArvoreBinaria implements IArvoreBinaria
 {
     private No raiz;
     private int tamanho;
-    private ArrayList<No> nodes, preOrder = new ArrayList<No>(), posOrder = new ArrayList<No>();
+    private ArrayList<No> nodelist = new ArrayList<No>();
 
     public ArvoreBinaria() { }
 
@@ -70,34 +70,15 @@ public class ArvoreBinaria implements IArvoreBinaria
     }
 
     @Override
-    public Iterator elements() {
-        return null;
-//        Iterator it;
-//        if (root() == null) {
-//            return null;
-//        }
-//        else {
-//            //it = emOrdem(this.root());
-//            ArrayList obj = new ArrayList();
-//            while (it.hasNext()) {
-//                No node = (No) it.next();
-//                int o = node.getO();
-//                obj.add(o);
-//            }
-//            it = obj.iterator();
-//            return it;
-//        }
-    }
+    public Iterator elements() { return null; }
 
     @Override
-    public Iterator nos() {
-        return null;
-//        if (this.root() == null) {
-//            return null;
-//        }
-//        else {
-//            return inOrder(this.root());
-//        }
+    public ArrayList<No> nos() {
+        this.nodelist = new ArrayList<No>();
+        this.inOrder(this.root());
+        this.postOrder(this.root());
+        this.preOrder(this.root());
+        return this.nodelist;
     }
 
     @Override
@@ -145,9 +126,7 @@ public class ArvoreBinaria implements IArvoreBinaria
         if (this.raiz == v) {
             return 0;
         }
-
         return 1 + this.depth(v.getPai());
-
     }
 
     @Override
@@ -240,6 +219,7 @@ public class ArvoreBinaria implements IArvoreBinaria
                 this.tamanho--;
                 return node;
             }
+
             // excluir no com um filho
             if (node.getFilhoEsq() == null && node.getFilhoDir() != null) {
                 if (node.getPai().getO() <= 0) {
@@ -266,6 +246,7 @@ public class ArvoreBinaria implements IArvoreBinaria
                 this.tamanho--;
                 return node;
             }
+
             // excluir com dois nós
             No aux = node.getFilhoDir();
             while (aux.getFilhoEsq() != null) {
@@ -306,95 +287,58 @@ public class ArvoreBinaria implements IArvoreBinaria
         }
     }
 
-    public Iterator preOrder()
+    public void preOrder(No v)
     {
-        preOrder = new ArrayList();
-        if (this.root() == null) {
-            return null;
+        this.nodelist.add(v);
+
+        if (filhoEsq(v) != null) {
+            preOrder(filhoEsq(v));
         }
-        else {
-            return preOrder(this.root());
+
+        if (filhoDir(v) != null) {
+            preOrder(filhoDir(v));
         }
     }
 
-    public Iterator preOrder(No v)
-    {
-        preOrder.add(v);
-
-        if (isInternal(v))
-        {
-            if (filhoEsq(v) != null) {
-                preOrder(filhoEsq(v));
-            }
-
-            if (filhoDir(v) != null) {
-                preOrder(filhoDir(v));
-            }
-        }
-
-        Iterator<No> it = preOrder.iterator();
-        return it;
-    }
-
-    public void emOrdem(No v)
+    public void inOrder(No v)
     {
         if (v.getFilhoEsq() != null)
         {
-            emOrdem(v.getFilhoEsq());
+            inOrder(v.getFilhoEsq());
         }
 
-        this.nodes.add(v);
+        this.nodelist.add(v);
 
         if (v.getFilhoDir() != null) {
-            emOrdem(v.getFilhoDir());
+            inOrder(v.getFilhoDir());
         }
 
     }
 
-    public Iterator posOrder()
+    public void postOrder(No v)
     {
-        posOrder = new ArrayList();
-        if (this.root() == null)
-        {
-            return null;
-        }
-        else {
-            return posOrder(this.root());
-        }
-    }
-
-    public Iterator posOrder(No v)
-    {
-        if (isInternal(v))
-        {
-            if (filhoEsq(v) != null) {
-                posOrder(filhoEsq(v));
-            }
-
-            if (filhoDir(v) != null) {
-                posOrder(filhoDir(v));
-            }
+        if (filhoEsq(v) != null) {
+            postOrder(filhoEsq(v));
         }
 
-        posOrder.add(v);
-        Iterator it = posOrder.iterator();
-        return it;
+        if (filhoDir(v) != null) {
+            postOrder(filhoDir(v));
+        }
+
+        this.nodelist.add(v);
     }
 
-    public ArrayList<No> nodes() {
-        this.nodes = new ArrayList<No>();
-        this.emOrdem(this.root());
-        return this.nodes;
-    }
     @Override
     public void print() {
         int x = altura(this.raiz) +1, y = this.tamanho, z = 0;
         int matrix[][] = new int[x][y];
-        ArrayList<No> nodesContidos = this.nodes();
-        while (z < y){
+        ArrayList<No> nodesContidos = this.nos();
+
+        while (z < y) {
             matrix[ this.depth(nodesContidos.get(z)) ][z] = nodesContidos.get(z).getO();
             z++;
         }
+
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 if (matrix[i][j] != 0) {
