@@ -186,6 +186,9 @@ public class ArvoreBinaria implements IArvoreBinaria
             if (raiz.getFilhoEsq() != null) {
                 return buscar(o, raiz.getFilhoEsq());
             }
+            else {
+                return raiz;
+            }
         }
 
         else if (o == raiz.getO()) {
@@ -195,6 +198,9 @@ public class ArvoreBinaria implements IArvoreBinaria
         else if (o > raiz.getO()) {
             if (raiz.getFilhoDir() != null) {
                 return buscar(o, raiz.getFilhoDir());
+            }
+            else {
+                return raiz;
             }
         }
 
@@ -210,7 +216,7 @@ public class ArvoreBinaria implements IArvoreBinaria
         if (node != null) {
             // excluir folha
             if (isExternal(node)) {
-                if (node.getPai().getO() <= 0 ) {
+                if (node.getO() - node.getPai().getO() <= 0 ) {
                     node.getPai().setFilhoEsq(null);
                 }
                 else {
@@ -219,10 +225,9 @@ public class ArvoreBinaria implements IArvoreBinaria
                 this.tamanho--;
                 return node;
             }
-
             // excluir no com um filho
             if (node.getFilhoEsq() == null && node.getFilhoDir() != null) {
-                if (node.getPai().getO() <= 0) {
+                if (node.getO() - node.getPai().getO() <= 0) {
                     node.getPai().setFilhoEsq(node.getFilhoDir());
                     node.getFilhoDir().setPai(node.getPai());
                 }
@@ -235,7 +240,7 @@ public class ArvoreBinaria implements IArvoreBinaria
             }
 
             if (node.getFilhoEsq() != null && node.getFilhoDir() == null) {
-                if (node.getPai().getO() <= 0) {
+                if (node.getO() - node.getPai().getO() <= 0) {
                     node.getPai().setFilhoEsq(node.getFilhoEsq());
                     node.getFilhoEsq().setPai(node.getPai());
                 }
@@ -246,12 +251,12 @@ public class ArvoreBinaria implements IArvoreBinaria
                 this.tamanho--;
                 return node;
             }
-
             // excluir com dois nós
             No aux = node.getFilhoDir();
             while (aux.getFilhoEsq() != null) {
-                // pecorrer para pegar o menor elemento que obrigatoriamente é um filho esquerdo
+                // percorrer para pegar o menor elemento que obrigatoriamente é um filho esquerdo
                 aux = aux.getFilhoEsq();
+                //System.out.println(aux.getFilhoEsq().getO());
             }
             int menorEsquerdo = aux.getO();
             remocao(aux, menorEsquerdo);
@@ -335,17 +340,17 @@ public class ArvoreBinaria implements IArvoreBinaria
         ArrayList<No> nodesContidos = this.nos();
 
         while (z < y) {
-            matrix[ this.depth(nodesContidos.get(z)) ][z] = nodesContidos.get(z).getO();
+            matrix[this.depth(nodesContidos.get(z))][z] = nodesContidos.get(z).getO();
             z++;
         }
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 if (matrix[i][j] != 0) {
-                    System.out.print(matrix[i][j] + "  ");
+                    System.out.print(matrix[i][j] + "--");
                 }
                 else {
-                    System.out.print("  ");
+                    System.out.print("--");
                 }
             }
             System.out.print("\n");
