@@ -256,12 +256,13 @@ public class ArvoreBinaria implements IArvoreBinaria
             while (aux.getFilhoEsq() != null) {
                 // percorrer para pegar o menor elemento que obrigatoriamente é um filho esquerdo
                 aux = aux.getFilhoEsq();
-                //System.out.println(aux.getFilhoEsq().getO());
+                System.out.println("aaaaa" + aux.getFilhoEsq().getO());
             }
             int menorEsquerdo = aux.getO();
+            System.out.println(menorEsquerdo);
             remocao(aux, menorEsquerdo);
             node.setO(menorEsquerdo);
-            this.tamanho--;
+            //this.tamanho--;
             return node;
         }
         return null;

@@ -10,11 +10,10 @@ public class Main {
         ab.inserir(9);
         ab.inserir(11);
         ab.print();
-
-        System.out.println("----------- Removendo o valor 7 -------------");
-        No find = ab.buscar(2, ab.getRaiz());
-        System.out.println(ab.remover(find));
-        //ab.remover(find);
+        System.out.println("----------- Removendo o valor  -------------");
+        No find = ab.buscar(4, ab.getRaiz());
+        //System.out.println(ab.remover(find));
+        ab.remover(find);
         ab.print();
 
     }
