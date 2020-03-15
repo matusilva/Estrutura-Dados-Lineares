@@ -3,9 +3,9 @@ import java.util.Iterator;
 
 public class ArvoreBinaria implements IArvoreBinaria
 {
-    private No raiz;
-    private int tamanho;
-    private ArrayList<No> nodelist = new ArrayList<No>();
+    protected No raiz;
+    protected int tamanho;
+    protected ArrayList<No> nodelist = new ArrayList<No>();
 
     public ArvoreBinaria() { }
 
@@ -51,7 +51,7 @@ public class ArvoreBinaria implements IArvoreBinaria
         }
     }
 
-    private int altura(No v)
+    protected int altura(No v)
     {
         if (v == null || isExternal(v)) {
             return 0;
