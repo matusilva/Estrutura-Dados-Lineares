@@ -138,7 +138,7 @@ public class AVL extends ArvoreBinaria implements IAVL {
         if (isEmpty()) {
             this.setRaiz(node);
             this.tamanho++;
-            System.out.println(node + "Inserido como a RAIZ");
+            System.out.println(node.getO() + " Inserido como a RAIZ");
         }
         else {
             NoAVL novo = (NoAVL) buscar(o, getRaiz());
