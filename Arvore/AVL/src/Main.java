@@ -8,5 +8,10 @@ public class Main {
         avl.inserir(9);
         avl.inserir(11);
         avl.print();
+        System.out.println("----------- Removendo o valor  -------------");
+
+        NoAVL find = (NoAVL) avl.buscar(2, avl.getRaiz());
+        avl.remover(find);
+        avl.print();
     }
 }

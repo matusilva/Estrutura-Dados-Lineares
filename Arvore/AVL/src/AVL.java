@@ -134,31 +134,28 @@ public class AVL extends ArvoreBinaria implements IAVL {
 
     public void inserir(int o) {
         NoAVL node = new NoAVL(o);
-        int result;
-        if (isEmpty()) {
+        if (this.raiz == null) {
             this.setRaiz(node);
             this.tamanho++;
-            System.out.println(node.getO() + " Inserido como a RAIZ");
         }
         else {
-            NoAVL novo = (NoAVL) buscar(o, getRaiz());
-            result = novo.getO() - node.getO();
-            if (result > 0) {
-                novo.setFilhoEsq(node);
-                node.setPai(novo);
+            NoAVL nodePai = (NoAVL) buscar(o, getRaiz());
+            if (nodePai.getO() == node.getO()) {
+                System.out.println("Elemento já Existe");
+            }
+            else if (node.getO() < nodePai.getO()) {
+                nodePai.setFilhoEsq(node);
+                node.setPai(nodePai);
                 this.tamanho++;
                 // node inserido a esquerda do pai novo
-                atualizaFB(novo, 1, 1);
+                atualizaFB(nodePai, 1, 1);
             }
-            else if (result < 0) {
-                novo.setFilhoDir(node);
-                node.setPai(novo);
+            else if (node.getO() > nodePai.getO()) {
+                nodePai.setFilhoDir(node);
+                node.setPai(nodePai);
                 this.tamanho++;
                 // node inserido a direita de novo
-                atualizaFB(novo, 1, -1);
-            }
-            else if (result == 0) {
-                System.out.println("No Já Existe");
+                atualizaFB(nodePai, 1, -1);
             }
         }
     }
