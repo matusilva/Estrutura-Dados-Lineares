@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Arvore-Binaria:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Arvore_Binaria_jar</output-path>
+    <root id="archive" name="Arvore-Binaria.jar">
+      <element id="module-output" name="Arvore-Binaria" />
+    </root>
+  </artifact>
+</component>
