@@ -49,6 +49,7 @@ public class AVL extends ArvoreBinaria implements IAVL {
             aux.setFb(fbA);
             no.setFb(fbB);
 
+            // perguntar ao professor sobre a rotacao dupla
         }
     }
 
@@ -93,7 +94,7 @@ public class AVL extends ArvoreBinaria implements IAVL {
     }
 
     @Override
-    public void atualizaFB(NoAVL no, int op, int nodefb) {
+    public void atualizaFB(NoAVL no, String op, int nodefb) {
         no.setFb(no.getFb() + nodefb);
         int fb = no.getFb();
 
@@ -108,8 +109,8 @@ public class AVL extends ArvoreBinaria implements IAVL {
             }
         }
 
-        if (op == 1) {
-            // opcao 1 = inserir
+        if (op.equals("i")) {
+            // opcao i = inserir
             if (no.getPai() != null && no.getFb() != 0) {
                 if (no.getO() < no.getPai().getO()) {
                     atualizaFB((NoAVL) no.getPai(), op, 1);
@@ -119,8 +120,8 @@ public class AVL extends ArvoreBinaria implements IAVL {
                 }
             }
         }
-        else if (op == 2) {
-            // opcao 2 = remover
+        else if (op.equals("r")) {
+            // opcao r = remover
             if (no.getPai() != null && no.getFb() == 0) {
                 if (no.getO() < no.getPai().getO()) {
                     atualizaFB((NoAVL) no.getPai(), op, -1);
@@ -148,14 +149,14 @@ public class AVL extends ArvoreBinaria implements IAVL {
                 node.setPai(nodePai);
                 this.tamanho++;
                 // node inserido a esquerda do pai novo
-                atualizaFB(nodePai, 1, 1);
+                atualizaFB(nodePai, "i", 1);
             }
             else if (node.getO() > nodePai.getO()) {
                 nodePai.setFilhoDir(node);
                 node.setPai(nodePai);
                 this.tamanho++;
                 // node inserido a direita de novo
-                atualizaFB(nodePai, 1, -1);
+                atualizaFB(nodePai, "i", -1);
             }
         }
     }
@@ -170,10 +171,10 @@ public class AVL extends ArvoreBinaria implements IAVL {
             if (isExternal(node)) {
                 if (node.getO() - node.getPai().getO() <= 0) {
                     node.getPai().setFilhoEsq(null);
-                    atualizaFB((NoAVL) node.getPai(), 2, -1);
+                    atualizaFB((NoAVL) node.getPai(), "r", -1);
                 } else {
                     node.getPai().setFilhoDir(null);
-                    atualizaFB((NoAVL) node.getPai(), 2, 1);
+                    atualizaFB((NoAVL) node.getPai(), "r", 1);
                 }
                 this.tamanho--;
                 return node;
@@ -184,11 +185,11 @@ public class AVL extends ArvoreBinaria implements IAVL {
                 if (node.getO() - node.getPai().getO() <= 0) {
                     node.getPai().setFilhoEsq(node.getFilhoDir());
                     node.getFilhoDir().setPai(node.getPai());
-                    atualizaFB((NoAVL) node.getPai(), 2, -1);
+                    atualizaFB((NoAVL) node.getPai(), "r", -1);
                 } else {
                     node.getPai().setFilhoDir(node.getFilhoDir());
                     node.getFilhoDir().setPai(node.getPai());
-                    atualizaFB((NoAVL) node.getPai(), 2, 1);
+                    atualizaFB((NoAVL) node.getPai(), "r", 1);
                 }
                 this.tamanho--;
                 return node;
@@ -197,11 +198,11 @@ public class AVL extends ArvoreBinaria implements IAVL {
                 if (node.getO() - node.getPai().getO() <= 0) {
                     node.getPai().setFilhoEsq(node.getFilhoEsq());
                     node.getFilhoEsq().setPai(node.getPai());
-                    atualizaFB((NoAVL) node.getPai(), 2, -1);
+                    atualizaFB((NoAVL) node.getPai(), "r", -1);
                 } else {
                     node.getPai().setFilhoDir(node.getFilhoEsq());
                     node.getFilhoEsq().setPai(node.getPai());
-                    atualizaFB((NoAVL) node.getPai(), 2, 1);
+                    atualizaFB((NoAVL) node.getPai(), "r", 1);
                 }
                 this.tamanho--;
                 return node;
@@ -211,10 +212,10 @@ public class AVL extends ArvoreBinaria implements IAVL {
             while (aux.getFilhoEsq() != null) {
                 // percorrer para pegar o menor elemento que obrigatoriamente é um filho esquerdo
                 aux = (NoAVL) aux.getFilhoEsq();
-                System.out.println("aaaaa" + aux.getFilhoEsq().getO());
+                //System.out.println("aaaaa" + aux.getFilhoEsq().getO());
             }
             int menorEsquerdo = aux.getO();
-            System.out.println(menorEsquerdo);
+            System.out.println("menor esquerdo " + menorEsquerdo);
             int auxfb = aux.getFb();
             remocao(aux, menorEsquerdo);
             node.setO(menorEsquerdo);
@@ -227,21 +228,23 @@ public class AVL extends ArvoreBinaria implements IAVL {
 
     public void print() {
         int x = altura(this.raiz) + 1, y = this.tamanho, z = 0;
-        int matrix[][] = new int[x][y];
-        ArrayList<No> nodesContidos = this.nos();
+        String matrix[][] = new String[x][y];
 
+        ArrayList<No> nodesContidos = this.nos();
+        int fb;
         while (z < y) {
-            matrix[this.depth(nodesContidos.get(z))][z] = nodesContidos.get(z).getO();
+            fb = ((NoAVL) nodesContidos.get(z)).getFb();
+            matrix[this.depth(nodesContidos.get(z))][z] = nodesContidos.get(z).getO() + "[" +  fb + "]";
             z++;
         }
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                if (matrix[i][j] != 0) {
-                    System.out.println(matrix[i][j] + "--");
+                if (matrix[i][j] != null) {
+                    System.out.print(matrix[i][j] + "  ");
                 }
                 else {
-                    System.out.println("--");
+                    System.out.print("  ");
                 }
             }
             System.out.println("\n");
