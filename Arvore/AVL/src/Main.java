@@ -45,11 +45,11 @@ public class Main {
             System.exit(0);
         }
 
-
+        /*
         int valor = sc.nextInt();
         NoAVL find = (NoAVL) avl.buscar(valor, avl.getRaiz());
         avl.remover(find);
 
-        avl.print();
+        avl.print();*/
     }
 }
