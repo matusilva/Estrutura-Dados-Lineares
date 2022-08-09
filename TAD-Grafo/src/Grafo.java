@@ -40,7 +40,9 @@ public class Grafo implements IGrafo {
         Object newMatriz[][] = new Object[this.vertices.size()][this.vertices.size()];
         for (int i = 0; i < this.vertices.size(); i++) {
             for (int j = 0; j < this.vertices.size(); j++) {
-                newMatriz[i][j] = this.matriz[i][j];
+                if (valor == v.getValor()) {
+                    newMatriz[i][j] = this.matriz[i][j];
+                }
             }
         }
         this.matriz = newMatriz;
